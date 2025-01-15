@@ -1,7 +1,15 @@
 <script lang="ts">
-    import { Button, SectionHeadline } from "$components";
-    import aboutMeImage from "$assets/about-me.jpeg";
     import { goto } from "$app/navigation";
+    import aboutMeImage from "$assets/about-me.jpeg";
+    import { Button, ExperienceTable, SectionHeadline } from "$components";
+    import type { DevExperience } from "$lib/types/sanity";
+
+    interface AboutMeProps {
+        workExperience: DevExperience[];
+    }
+
+    let { workExperience } = $props();
+
     const aboutMeSection = `
       <p>
         Hey, I'm Niklas, the driving force behind my freelancing agency
@@ -23,9 +31,9 @@
         experience and practical know-how, let's dive in together.
       </p>`;
 
-      function onclick() {
+    function onclick() {
         goto("/#contact-form");
-      }
+    }
 </script>
 
 <section class="about-me mt-l">
@@ -34,9 +42,12 @@
         <img src={aboutMeImage} class="image" alt="About Me" />
         <div class="text">
             {@html aboutMeSection}
-            <Button className="mt-m" {onclick}>Tell me about your project</Button>
+            <Button className="mt-m" {onclick}
+                >Tell me about your project</Button
+            >
         </div>
     </div>
+    <ExperienceTable {workExperience} />
 </section>
 
 <style>

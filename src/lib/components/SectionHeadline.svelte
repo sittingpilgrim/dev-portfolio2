@@ -10,6 +10,6 @@
 </script>
 
 <div class="default-margin" id={sectionName}>
-    <h2>{@render children()}</h2>
+    <h3>{@render children()}</h3>
     <div class="underscore mb-s"></div>
 </div>
