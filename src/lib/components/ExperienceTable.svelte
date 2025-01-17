@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { DevExperience } from "$lib/types/sanity";
     interface WorkExperience {
         jobTitle: string;
         company: string;
@@ -7,13 +6,11 @@
         endDate?: string;
     }
 
-
     interface AboutMeProps {
-        workExperience: DevExperience[];
+        workExperience: SanityWorkExperience[];
     }
 
     let { workExperience } = $props();
-
 </script>
 
 <section class="default-margin work-experience mt-m">
