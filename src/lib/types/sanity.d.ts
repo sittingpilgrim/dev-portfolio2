@@ -35,6 +35,25 @@ type SanityProject = {
     stack: Array<string>;
 };
 
+// type SanitySkills = {
+//     _id: string;
+//     _type: "skills";
+//     _createdAt: string;
+//     _updatedAt: string;
+//     _rev: string;
+//     skillsList?: Array<{
+//         name?: string;
+//         iconClass?: string;
+//         _key: string;
+//     }>;
+// };
+
+interface Skill {
+    name: string;
+    iconClass: string;
+    _key: string;
+}
+
 interface RawTextContent {
     children: Array<{
         marks?: Array<string>;
