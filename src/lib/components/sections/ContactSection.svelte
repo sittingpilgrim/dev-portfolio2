@@ -9,8 +9,6 @@
     let showErrorMessage = $state(false);
     let isLoading = $state(false);
 
-    $inspect(isEmailSent);
-
     async function handleSubmit(e: Event) {
         e.preventDefault();
         if (name && email && message) {
@@ -23,7 +21,6 @@
                 },
             });
             isLoading = false;
-            console.log(response);
             if (response.ok) {
                 isEmailSent = true;
             } else {
@@ -31,7 +28,6 @@
             }
         } else {
             isFormInvalid = true;
-            console.log("Please fill in all fields");
         }
     }
 

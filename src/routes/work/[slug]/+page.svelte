@@ -1,6 +1,5 @@
 <script lang="ts">
     const { data } = $props();
-    $inspect(data);
     let { name, company, projectImageUrl, content, stack, dateAccomplished } =
         data.project;
 
