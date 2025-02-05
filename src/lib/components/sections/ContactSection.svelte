@@ -1,34 +1,84 @@
 <script lang="ts">
     import { Button, SectionHeadline } from "$components";
 
-    const handleSubmit = (e: Event) => {
+    let name = $state("Tom");
+    let email = $state("tom@gmail.com");
+    let message = $state("Hello, I'm Tom");
+    let isFormInvalid = $state(false);
+    let isEmailSent = $state(false);
+    let showErrorMessage = $state(false);
+    let isLoading = $state(false);
+
+    $inspect(isEmailSent);
+
+    async function handleSubmit(e: Event) {
         e.preventDefault();
-        console.log(e);
-    };
+        if (name && email && message) {
+            isLoading = true;
+            const response = await fetch("/api/send-mail", {
+                method: "POST",
+                body: JSON.stringify({ name, email, message }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            isLoading = false;
+            console.log(response);
+            if (response.ok) {
+                isEmailSent = true;
+            } else {
+                showErrorMessage = true;
+            }
+        } else {
+            isFormInvalid = true;
+            console.log("Please fill in all fields");
+        }
+    }
+
+    $effect(() => {
+        if (name || email || message) {
+            isFormInvalid = false;
+        }
+    });
 </script>
 
 <section class="mt-l">
     <SectionHeadline sectionName="contact-form">Let's Talk</SectionHeadline>
     <div class="form-container default-margin mt-m">
-        <form class="form">
-            <input
-                class="text-input"
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Your Name"
-            />
-            <input
-                class="text-input"
-                type="text"
-                id="email"
-                name="email"
-                placeholder="Your Email "
-            />
-            <textarea id="message" name="message" placeholder="What's up?"
-            ></textarea>
-            <Button onclick={handleSubmit}>Send Message</Button>
-        </form>
+        {#if isEmailSent}
+            <div class="spinner-container">
+                <h4>Email sent successfully</h4>
+            </div>
+        {:else if isLoading}
+            <div class="spinner-container">
+                <div class="spinner"></div>
+                <h4>Sending email...</h4>
+            </div>
+        {:else if showErrorMessage}
+            <h4>Error sending email</h4>
+        {:else}
+            <form class="form">
+                <input
+                    class="text-input mb-m"
+                    class:input-error={isFormInvalid && !Boolean(name.length)}
+                    placeholder="Your Name"
+                    bind:value={name}
+                />
+                <input
+                    class="text-input mb-m"
+                    class:input-error={isFormInvalid && !Boolean(email.length)}
+                    placeholder="Your Email Address"
+                    bind:value={email}
+                />
+                <textarea
+                    class:input-error={isFormInvalid &&
+                        !Boolean(message.length)}
+                    placeholder="What's up?"
+                    bind:value={message}
+                ></textarea>
+                <Button onclick={handleSubmit}>Send Message</Button>
+            </form>
+        {/if}
         <div class="form-text">
             <h3 class="bold mb-s">Talk to me about your project</h3>
             <p>
@@ -42,7 +92,6 @@
             </p>
         </div>
     </div>
-    <!-- <div class="spinner"></div> -->
 </section>
 
 <style>
@@ -121,7 +170,5 @@
 
     .spinner-container {
         display: flex;
-        align-items: center;
-        justify-content: center;
     }
 </style>

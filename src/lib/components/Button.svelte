@@ -3,7 +3,7 @@
 
     interface ButtonProps {
         children: Snippet;
-        onclick: ((e: MouseEvent) => void | (() => void));
+        onclick: ((e: MouseEvent) => void) | (() => void);
         className?: string;
     }
 
@@ -16,7 +16,7 @@
 
 <style>
     .btn {
-        font-family: 'Inter Tight', sans-serif;
+        font-family: "Inter Tight", sans-serif;
         font-weight: 500;
         background-color: black;
         color: white;
@@ -24,5 +24,9 @@
         padding: 14px 40px;
         border-radius: 10px;
     }
-</style>
 
+    .nav-bar {
+        padding: 10px 20px;
+        font-size: 1.2rem;
+    }
+</style>
