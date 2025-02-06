@@ -35,7 +35,7 @@
                         >{item.textToRender}</svelte:element
                     >
                 {:else}
-                    <img class="content-image" src={item.url} alt="" />
+                    <img class="content-image" src={item?.url} alt="" />
                 {/if}
             {/each}
         </div>
